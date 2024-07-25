@@ -1,56 +1,70 @@
 #include "walker.h"
 #include "constants.h"
 
-Walker::Walker()
+Walker::Walker(Vector2 origin)
 {
-    this->position.x = SCREEN_WIDTH / 2;
-    this->position.y = SCREEN_HEIGHT / 2;
+    points.push_back(origin);
+    position.x = origin.x;
+    position.y = origin.y;
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Random Walk");
+    SetTargetFPS(TARGET_FPS);
 }
 
 void Walker::Walk()
 {
-    // flip two coins
-    // head/heads - go up
-    // head/tails - go right
-    // tails/heads - go left
-    // tails/tails - go down
+    int randommove = GetRandomValue(1,4);
 
-    int coin1 = GetRandomValue(1, 2); //(1 = heads / 2 = tails)
-    int coin2 = GetRandomValue(1, 2);
-
-    if (position.x > 0 && position.x < SCREEN_WIDTH && position.y > 0 && position.y < SCREEN_HEIGHT)
+    if(position.x > 0 && position.x < SCREEN_WIDTH && position.y > 0 && position.y < SCREEN_HEIGHT)
     {
-        switch (coin1)
+        switch(randommove){
+            case 1:
+                points.push_back({position.x, position.y - STEP});
+                position.y = position.y - STEP;
+                break;
+            case 2:
+                points.push_back({position.x + STEP, position.y});
+                position.x = position.x + STEP;            
+                break;
+            case 3:
+                points.push_back({position.x - STEP, position.y});
+                position.x = position.x - STEP;
+                break;
+            case 4:
+                points.push_back({position.x, position.y + STEP});
+                position.y = position.y + STEP;
+                break;    
+        }
+    }        
+}
+
+void Walker::Draw()
+{
+    BeginDrawing();        
+    ClearBackground(BACKGROUND);
+    for(int i = 0; i < (int)points.size() - 1 ; i++)
+    {
+        Color strokeColour = RAYWHITE;
+        if(points[i].x > points[i+1].x)
         {
-        case 1:
-            switch (coin2)
-            {
-            case 1:
-                DrawLine(position.x, position.y, position.x, position.y - STEP, UP);
-                this->position.y = position.y - STEP;
-                break;
-            case 2:
-                DrawLine(position.x, position.y, position.x + STEP, position.y, RIGHT);
-                this->position.x = position.x + STEP;
-                break;
-            }
-            break;
-        case 2:
-            switch (coin2)
-            {
-            case 1:
-                DrawLine(position.x, position.y, position.x - STEP, position.y, LEFT);
-                this->position.x = position.x - STEP;
-                break;
-            case 2:
-                DrawLine(position.x, position.y, position.x, position.y + STEP, DOWN);
-                this->position.y = position.y + STEP;
-                break;
-            }
-            break;
-        }        
+            strokeColour = LEFT;
+        }
+        if(points[i].x < points[i+1].x)
+        {
+            strokeColour = RIGHT;
+        }
+        if(points[i].y > points[i+1].y)
+        {
+            strokeColour = UP;
+        }
+        if(points[i].y > points[i+1].y)
+        {
+            strokeColour = DOWN;
+        }
+        
+        DrawLineEx(points[i], points[i+1], STROKE, strokeColour);        
     }
     
+    EndDrawing();
 }
 
 void Walker::Reset()
@@ -58,6 +72,16 @@ void Walker::Reset()
     this->position.x = SCREEN_WIDTH / 2;
     this->position.y = SCREEN_HEIGHT / 2;    
     ClearBackground(BACKGROUND);
+}
+
+bool Walker::WalkerShouldClose()
+{
+    return WindowShouldClose();
+}
+
+void Walker::Close()
+{
+    CloseWindow();
 }
 
 Vector2 Walker::GetPosition()

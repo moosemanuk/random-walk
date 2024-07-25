@@ -1,14 +1,20 @@
 #pragma once
 #include <raylib.h>
+#include <vector>
 
 class Walker{
-    private:
+    private:        
         Vector2 position;
+        std::vector<Vector2> points;
+        int steps;
         
     public:
-        Walker();
-        void Walk();  
+        Walker(Vector2 origin);
+        void Walk();
+        void Draw();  
         void Reset(); 
+        bool WalkerShouldClose();
+        void Close();
         Vector2 GetPosition();     
                 
 };
