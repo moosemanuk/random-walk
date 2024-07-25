@@ -13,7 +13,7 @@ Walker::Walker(Vector2 origin)
 void Walker::Walk()
 {
     int randommove = GetRandomValue(1,4);
-
+    
     if(position.x > 0 && position.x < SCREEN_WIDTH && position.y > 0 && position.y < SCREEN_HEIGHT)
     {
         switch(randommove){
@@ -34,7 +34,9 @@ void Walker::Walk()
                 position.y = position.y + STEP;
                 break;    
         }
-    }        
+        steps++; 
+    }
+           
 }
 
 void Walker::Draw()
@@ -63,7 +65,7 @@ void Walker::Draw()
         
         DrawLineEx(points[i], points[i+1], STROKE, strokeColour);        
     }
-    
+    DrawText(TextFormat("Steps: %d", steps), 10, 10, 20, TEXT);
     EndDrawing();
 }
 
