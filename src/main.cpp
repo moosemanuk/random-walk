@@ -8,6 +8,10 @@ int main()
     
     while (!walker.WalkerShouldClose())
     {
+        if(IsKeyPressed(KEY_SPACE))
+        {
+            walker.Reset();
+        }
         walker.Walk();        
         walker.Draw();        
     }

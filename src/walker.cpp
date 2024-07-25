@@ -72,7 +72,9 @@ void Walker::Draw()
 void Walker::Reset()
 {
     this->position.x = SCREEN_WIDTH / 2;
-    this->position.y = SCREEN_HEIGHT / 2;    
+    this->position.y = SCREEN_HEIGHT / 2; 
+    points.clear();
+    steps = 0;   
     ClearBackground(BACKGROUND);
 }
 
