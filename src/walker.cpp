@@ -66,6 +66,7 @@ void Walker::Draw()
         DrawLineEx(points[i], points[i+1], STROKE, strokeColour);        
     }
     DrawText(TextFormat("Steps: %d", steps), 10, 10, 20, TEXT);
+    DrawText(TextFormat("(Press space to reset)"), 150, 10, 20, TEXT);
     EndDrawing();
 }
 
