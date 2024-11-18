@@ -16,7 +16,8 @@ void Walker::Walk()
     
     if(position.x > 0 && position.x < SCREEN_WIDTH && position.y > 0 && position.y < SCREEN_HEIGHT)
     {
-        switch(randommove){
+        switch(randommove)
+        {
             case 1:
                 points.push_back({position.x, position.y - STEP});
                 position.y = position.y - STEP;
@@ -89,7 +90,7 @@ void Walker::Close()
     CloseWindow();
 }
 
-Vector2 Walker::GetPosition()
+Vector2 Walker::GetPosition() const
 {
     return position;
 }

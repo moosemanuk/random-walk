@@ -2,7 +2,8 @@
 #include <raylib.h>
 #include <vector>
 
-class Walker{
+class Walker
+{
     private:        
         Vector2 position;
         std::vector<Vector2> points;
@@ -15,6 +16,6 @@ class Walker{
         void Reset(); 
         bool WalkerShouldClose();
         void Close();
-        Vector2 GetPosition();     
+        Vector2 GetPosition() const;     
                 
 };
